@@ -1,0 +1,335 @@
+import { AgentNode, UseCaseData, StepData, ValueBlockData } from '../types';
+
+export const HERO_AGENT_NODES: AgentNode[] = [
+  {
+    id: 'sap-agent',
+    name: 'SAP Agent',
+    domain: 'Enterprise ERP',
+    role: 'Material master, purchase orders, financial posting & S/4HANA workflows',
+    tools: ['SAP BAPI', 'OData Services', 'RFC Connector', 'HANA DB'],
+    connections: ['salesforce-agent', 'data-agent', 'validation-agent', 'cloud-agent'],
+    color: '#38bdf8', // sky
+    x: 20,
+    y: 28,
+  },
+  {
+    id: 'salesforce-agent',
+    name: 'Salesforce Agent',
+    domain: 'CRM & Customer Ops',
+    role: 'Account context, deal velocity, service contracts & custom objects',
+    tools: ['Salesforce REST API', 'GraphQL API', 'Apex Callouts'],
+    connections: ['sap-agent', 'servicenow-agent', 'knowledge-agent'],
+    color: '#60a5fa', // blue
+    x: 78,
+    y: 26,
+  },
+  {
+    id: 'servicenow-agent',
+    name: 'ServiceNow Agent',
+    domain: 'ITSM & Service Workflows',
+    role: 'Change tickets, CMDB inventory reconciliation & operational incident lifecycle',
+    tools: ['ServiceNow REST', 'CMDB API', 'Flow Designer', 'MID Server'],
+    connections: ['salesforce-agent', 'security-agent', 'validation-agent', 'cloud-agent'],
+    color: '#818cf8', // indigo
+    x: 84,
+    y: 65,
+  },
+  {
+    id: 'cloud-agent',
+    name: 'Cloud Agent',
+    domain: 'Hybrid Infrastructure',
+    role: 'Cloud runbook invocation, telemetry triage, provisioning & container ops',
+    tools: ['AWS SDK', 'Azure Resource Graph', 'GCP APIs', 'Kubernetes'],
+    connections: ['sap-agent', 'servicenow-agent', 'security-agent'],
+    color: '#2dd4bf', // teal
+    x: 16,
+    y: 66,
+  },
+  {
+    id: 'data-agent',
+    name: 'Data Agent',
+    domain: 'Analytics & Semantic Layer',
+    role: 'Cross-system reconciliation, warehouse transformations & semantic queries',
+    tools: ['Snowflake', 'BigQuery', 'Databricks', 'Vector Index'],
+    connections: ['sap-agent', 'knowledge-agent', 'validation-agent'],
+    color: '#34d399', // emerald
+    x: 34,
+    y: 12,
+  },
+  {
+    id: 'security-agent',
+    name: 'Security Agent',
+    domain: 'Zero-Trust & Policy',
+    role: 'IAM role validation, secret boundary checks, compliance audit & policy assertion',
+    tools: ['Entra ID', 'HashiCorp Vault', 'CloudTrail', 'SIEM Feeds'],
+    connections: ['servicenow-agent', 'cloud-agent', 'validation-agent'],
+    color: '#f59e0b', // amber
+    x: 66,
+    y: 82,
+  },
+  {
+    id: 'knowledge-agent',
+    name: 'Knowledge Agent',
+    domain: 'Enterprise Semantic Corpus',
+    role: 'Standard Operating Procedures, enterprise runbooks, regulatory policies',
+    tools: ['Hybrid Search', 'Document RAG', 'Policy Graph', 'Confluence/SharePoint'],
+    connections: ['salesforce-agent', 'data-agent', 'validation-agent'],
+    color: '#a78bfa', // purple
+    x: 64,
+    y: 12,
+  },
+  {
+    id: 'validation-agent',
+    name: 'Validation Agent',
+    domain: 'Cross-Mesh Verification',
+    role: 'Invariant assertion, schema reconciliation, sanity checking & confidence scoring',
+    tools: ['Consensus Engine', 'Schema Validator', 'Policy Ruleset'],
+    connections: ['sap-agent', 'servicenow-agent', 'data-agent', 'security-agent', 'knowledge-agent'],
+    color: '#fb7185', // rose
+    x: 32,
+    y: 84,
+  },
+];
+
+export const ARCHITECTURE_STEPS: StepData[] = [
+  {
+    number: 1,
+    title: 'Business Objective',
+    category: 'Objective',
+    description: 'A business request or event enters the enterprise environment.',
+    details: [
+      'Originates from enterprise users, automated workflows, event streams, enterprise applications, or APIs.',
+      'Specifies the target business outcome rather than prescribing a rigid procedural script.',
+      'Initializes context boundary and enterprise audit trace.',
+    ],
+    interactionType: 'Control',
+  },
+  {
+    number: 2,
+    title: 'Work Decomposition',
+    category: 'Decomposition',
+    description: 'The workflow identifies the responsibilities required to complete the objective.',
+    details: [
+      'Decomposes multi-faceted goals into atomic domain responsibilities.',
+      'Identifies required domain capabilities, systems of record, and dependency graph.',
+      'Prepares context packages without concentrating entire workflow state in one single prompt.',
+    ],
+    interactionType: 'Control',
+  },
+  {
+    number: 3,
+    title: 'Specialist Agent Mesh',
+    category: 'Mesh',
+    description: 'Relevant agents participate according to role, capability, domain, context, and permissions.',
+    details: [
+      'Agents self-select or are addressed based on declared domain competencies.',
+      'Each specialist agent operates with restricted, least-privilege enterprise credentials.',
+      'Workloads are distributed concurrently across the decentralized topology.',
+    ],
+    interactionType: 'Explicit',
+  },
+  {
+    number: 4,
+    title: 'Distributed Collaboration',
+    category: 'Collaboration',
+    description: 'Agents collaborate through both explicit peer-to-peer messaging and shared state.',
+    details: [
+      'Explicit: Agent-to-agent task requests, status updates, delegation, and peer validation.',
+      'Implicit: Shared workflow state, distributed memory, enterprise knowledge graphs, and data stores.',
+      'Cooperative planning without routing every single message through a master bottleneck.',
+    ],
+    interactionType: 'Explicit',
+  },
+  {
+    number: 5,
+    title: 'Enterprise Interaction',
+    category: 'Systems',
+    description: 'Specialist agents interact directly with designated enterprise systems and tools.',
+    details: [
+      'Direct API calls, database queries, and ERP transactions (SAP, Salesforce, ServiceNow, Cloud).',
+      'Model Context Protocol (MCP) compatible tooling and external agent network bridges.',
+      'Secure scoped tool execution within strict network boundaries.',
+    ],
+    interactionType: 'System',
+  },
+  {
+    number: 6,
+    title: 'Validation',
+    category: 'Validation',
+    description: 'Outputs are checked, compared, reconciled, and verified by independent peer agents.',
+    details: [
+      'Cross-checking outputs against business invariants and enterprise data schemas.',
+      'Reconciliation of conflicting results across heterogeneous data sources.',
+      'Validation Agent issues confidence score and flags anomalies for human review.',
+    ],
+    interactionType: 'Explicit',
+  },
+  {
+    number: 7,
+    title: 'Governance',
+    category: 'Governance',
+    description: 'Enterprise controls determine access, policy compliance, and approval thresholds.',
+    details: [
+      'Identity assertion, role-based access control (RBAC), and corporate policy enforcement.',
+      'Mandatory Human-in-the-Loop (HITL) gates for high-impact or irreversible transactions.',
+      'Comprehensive tamper-evident audit logging of all agent deliberations and actions.',
+    ],
+    interactionType: 'Control',
+  },
+  {
+    number: 8,
+    title: 'Controlled Execution',
+    category: 'Execution',
+    description: 'Approved actions interact with enterprise systems to deliver the business outcome.',
+    details: [
+      'Transactional commits to production systems under verified change controls.',
+      'Rollback-capable operational procedures for mission-critical workflows.',
+      'Delivery of finalized artifacts, tickets, financial entries, or customer communications.',
+    ],
+    interactionType: 'System',
+  },
+  {
+    number: 9,
+    title: 'Performance Measurement',
+    category: 'Measurement',
+    description: 'DPI evaluates performance across the agent workflow across multiple dimensions.',
+    details: [
+      'Measurement of Productivity, Quality, Execution, Governance, Risk, Validation, and Cost.',
+      'Objective readiness signals for determining whether an agent workflow is ready to scale.',
+      'Continuous telemetry fed back into domain mesh optimization.',
+    ],
+    interactionType: 'Control',
+  },
+];
+
+export const VALUE_BLOCKS: ValueBlockData[] = [
+  {
+    number: '01',
+    title: 'Scale Through Specialisation',
+    feature: 'Modular Domain Agents',
+    featureSubtitle: 'Independent expansion of domain capabilities',
+    advantage: 'Capabilities can expand without continuously enlarging one general-purpose agent.',
+    benefit: 'A modular foundation for scaling agent-driven workflows as enterprise requirements grow.',
+    bulletPoints: [
+      'Introduce new domain agents for SAP, Salesforce, ServiceNow, or Cloud without rebuilding existing workflows.',
+      'Distribute cognitive workloads across specialized models tailored to specific technical tasks.',
+      'Scale enterprise operations horizontally across departments without architectural bottlenecks.',
+    ],
+  },
+  {
+    number: '02',
+    title: 'Configure the Network',
+    feature: 'Configurable Agent Responsibilities',
+    featureSubtitle: 'Dynamic routing and declarative behaviors',
+    advantage: 'The orchestration model can adapt to different processes and operating environments.',
+    benefit: 'Teams can evolve agent workflows without redesigning the entire architecture.',
+    bulletPoints: [
+      'Configure agent roles, prompt instructions, system boundaries, and escalation paths in code or config.',
+      'Adjust agent-to-agent relationships, tool assignments, and model selections as business needs shift.',
+      'Eliminate rigid hard-coded procedural pipelines in favor of adaptable mesh topologies.',
+    ],
+  },
+  {
+    number: '03',
+    title: 'Customise for the Enterprise',
+    feature: 'Domain-Specific Adaptation',
+    featureSubtitle: 'Bespoke alignment with complex operating realities',
+    advantage: 'The mesh can reflect the enterprise environment instead of forcing every organisation into one fixed agent pattern.',
+    benefit: 'Agent orchestration can align more closely with real operating models and business processes.',
+    bulletPoints: [
+      'Adapt to proprietary legacy APIs, custom SAP Z-tables, customized Salesforce objects, and on-prem databases.',
+      'Embed industry-specific compliance rules, terminology dictionaries, and custom verification gates.',
+      'Tailor human escalation mechanisms to organizational hierarchy and approval delegation matrices.',
+    ],
+  },
+  {
+    number: '04',
+    title: 'Govern & Measure',
+    feature: 'Human Governance + DPI',
+    featureSubtitle: 'Systemic accountability and empirical readiness',
+    advantage: 'Agent execution becomes more observable, auditable, and accountable at enterprise scale.',
+    benefit: 'Enterprises gain evidence to assess whether an agent workflow is operating effectively and whether wider scaling is justified.',
+    bulletPoints: [
+      'Enterprise-grade Identity, RBAC permissions, policy boundary enforcement, and human approval gates.',
+      'DPI framework continuously evaluates: Productivity, Quality, Execution, Governance, Risk, Validation, and Cost.',
+      'Clear, defensible audit trails for compliance officers, auditors, and executive leadership.',
+    ],
+  },
+];
+
+export const USE_CASES: UseCaseData[] = [
+  {
+    id: 'it-operations',
+    title: 'IT Operations',
+    domain: 'Incident Response & Runbook Remediation',
+    trigger: 'Operational Incident Detected in Hybrid Cloud',
+    agents: ['Cloud Agent', 'Monitoring Agent', 'Knowledge Agent', 'ServiceNow Agent', 'Security Agent'],
+    validation: 'Validation Agent verifies root cause against historical telemetry & CMDB topology',
+    approval: 'Human Engineer approves automated failover or configuration change in ServiceNow',
+    outcome: 'Remediation executed with automated change record, post-mortem draft, and system verification.',
+    valuePoints: [
+      'Cross-domain incident analysis connecting cloud telemetry with ServiceNow CMDB',
+      'Contextual information gathering and automated runbook retrieval',
+      'Governed remediation support with mandatory human authorization on destructive actions',
+    ],
+    systems: ['AWS CloudWatch', 'Datadog', 'ServiceNow ITSM', 'Kubernetes', 'Knowledge Base'],
+  },
+  {
+    id: 'enterprise-applications',
+    title: 'Enterprise Applications',
+    domain: 'Cross-System Order & Inventory Synchronization',
+    trigger: 'High-Value Business Process Request or Order Amendment',
+    agents: ['SAP Agent', 'Salesforce Agent', 'Integration Agent', 'Data Agent', 'Validation Agent'],
+    validation: 'Cross-checks credit status, inventory allocation, and pricing tiers between ERP and CRM',
+    approval: 'Commercial Operations Manager approves non-standard discount or custom credit limit',
+    outcome: 'Simultaneous atomic update across SAP S/4HANA and Salesforce with reconciled audit log.',
+    valuePoints: [
+      'Cross-system information retrieval across SAP S/4HANA and Salesforce CRM',
+      'Workflow coordination preventing inventory allocation race conditions',
+      'Validation and structured execution support preserving ERP transactional integrity',
+    ],
+    systems: ['SAP S/4HANA', 'Salesforce Enterprise', 'MuleSoft / Kafka', 'Enterprise Data Lake'],
+  },
+  {
+    id: 'customer-service',
+    title: 'Customer Service',
+    domain: 'Complex Case Resolution & SLA Protection',
+    trigger: 'Tier-3 Enterprise Customer Contract & Service Escalation',
+    agents: ['Classification Agent', 'Knowledge Agent', 'Policy Agent', 'CRM Agent', 'Escalation Agent'],
+    validation: 'Verifies contractual SLA commitments against current customer status and service credits',
+    approval: 'Customer Success Director reviews and authorizes tailored remediation proposal',
+    outcome: 'Structured case resolution package generated, CRM records updated, and client notified.',
+    valuePoints: [
+      'Multi-channel information gathering and intent classification',
+      'Policy-aware handling referencing enterprise contracts and compliance mandates',
+      'Structured case support with seamless escalation to human subject matter experts',
+    ],
+    systems: ['Salesforce Service Cloud', 'Zendesk', 'Contract Repository', 'Email Gateway', 'Knowledge Portal'],
+  },
+  {
+    id: 'cloud-operations',
+    title: 'Cloud Operations',
+    domain: 'FinOps Optimization & Security Boundary Management',
+    trigger: 'Operational Event & Cloud Resource Drift Alert',
+    agents: ['AWS / Azure Agent', 'Security Agent', 'Cost Agent', 'DevOps Agent', 'Validation Agent'],
+    validation: 'Simulates workload performance impact and security exposure before rightsizing',
+    approval: 'Cloud Architect signs off on reservation changes and security group consolidation',
+    outcome: 'Remediation deployed via Terraform / Infrastructure-as-Code pipeline with cost savings logged.',
+    valuePoints: [
+      'Comprehensive operational analysis spanning security posture and compute utilization',
+      'Policy-aware coordination aligning with FinOps budgets and CIS benchmarks',
+      'Controlled execution support through approved CI/CD pipelines',
+    ],
+    systems: ['AWS Management Console', 'Azure Resource Graph', 'Terraform Cloud', 'FinOps Platform', 'SIEM'],
+  },
+];
+
+export const DPI_DIMENSIONS = [
+  { name: 'Productivity', desc: 'Throughput velocity, task turnaround times, and business outcome acceleration.', color: 'border-cyan-500/40 text-cyan-400 bg-cyan-950/20' },
+  { name: 'Quality', desc: 'Accuracy of domain outputs, semantic relevance, and adherence to business logic.', color: 'border-blue-500/40 text-blue-400 bg-blue-950/20' },
+  { name: 'Execution', desc: 'Reliability of system interaction, tool execution success rates, and resilience.', color: 'border-teal-500/40 text-teal-400 bg-teal-950/20' },
+  { name: 'Governance', desc: 'Compliance with enterprise policies, RBAC enforcement, and audit completeness.', color: 'border-emerald-500/40 text-emerald-400 bg-emerald-950/20' },
+  { name: 'Risk', desc: 'Adversarial robustness, boundary containment, and safety posture monitoring.', color: 'border-amber-500/40 text-amber-400 bg-amber-950/20' },
+  { name: 'Validation', desc: 'Independent verification scores, consensus rates, and anomaly detection.', color: 'border-rose-500/40 text-rose-400 bg-rose-950/20' },
+  { name: 'Cost', desc: 'Token efficiency, compute utilization, and economic ROI per workflow execution.', color: 'border-violet-500/40 text-violet-400 bg-violet-950/20' },
+];
