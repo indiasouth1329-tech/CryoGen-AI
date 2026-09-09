@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { 
   ArrowRight, 
   ChevronRight, 
@@ -108,14 +109,14 @@ export const HeroFold: React.FC<HeroFoldProps> = ({ onOpenConsultation }) => {
             <ArrowRight className="w-4 h-4" />
           </button>
 
-          <a
+          <Link
             id="hero-secondary-cta"
-            href="#architecture-fold"
+            to="/architecture"
             className="inline-flex items-center gap-2 px-5 py-3.5 text-sm font-medium text-slate-300 hover:text-white bg-slate-800/80 hover:bg-slate-800 border border-slate-700 rounded-lg transition-colors cursor-pointer"
           >
             <span>Explore the Architecture</span>
             <ChevronRight className="w-4 h-4" />
-          </a>
+          </Link>
         </div>
 
         {/* ========================================================================= */}

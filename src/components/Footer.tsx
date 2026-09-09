@@ -1,10 +1,19 @@
 import React from 'react';
-import { Network, Shield, ArrowUp, ExternalLink } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Network, ArrowUp } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
+  const navLinks = [
+    { label: '01 Overview & Architecture', to: '/' },
+    { label: '02 The Problem (Single vs Mesh)', to: '/problem' },
+    { label: '03 The 9-Phase Lifecycle', to: '/architecture' },
+    { label: '04 Value, Governance & DPI', to: '/value-governance' },
+    { label: '05 Enterprise Use Cases', to: '/use-cases' },
+  ];
 
   return (
     <footer className="bg-[#050810] border-t border-slate-800 text-slate-400 text-xs py-14">
@@ -15,14 +24,14 @@ export const Footer: React.FC = () => {
           
           {/* Col 1: Brand & Core Position */}
           <div className="md:col-span-2 space-y-4">
-            <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-lg bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400">
+            <Link to="/" className="flex items-center gap-2.5 inline-flex group">
+              <div className="w-8 h-8 rounded-lg bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400 group-hover:border-cyan-400 transition-colors">
                 <Network className="w-4 h-4" />
               </div>
               <span className="font-display font-bold text-lg text-white tracking-tight">
                 Intelligenz <span className="text-cyan-400">IT</span>
               </span>
-            </div>
+            </Link>
             <p className="text-slate-400 max-w-sm leading-relaxed text-xs">
               Intelligenz IT is a digital transformation and enterprise technology company helping organizations move beyond isolated AI assistants toward coordinated, governed and measurable agent systems.
             </p>
@@ -46,17 +55,22 @@ export const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* Col 3: Agentic Capabilities & Nav */}
+          {/* Col 3: Multi-Page Navigation Routes */}
           <div>
             <div className="text-xs font-mono uppercase text-white font-bold tracking-wider mb-3">
               CryoGen AI Architecture
             </div>
             <ul className="space-y-2 text-slate-400">
-              <li><a href="#hero-fold" className="hover:text-cyan-300 transition-colors">01 Domain Mesh Overview</a></li>
-              <li><a href="#problem-fold" className="hover:text-cyan-300 transition-colors">02 Single-Agent vs Mesh</a></li>
-              <li><a href="#architecture-fold" className="hover:text-cyan-300 transition-colors">03 The 9-Phase Lifecycle</a></li>
-              <li><a href="#value-fold" className="hover:text-cyan-300 transition-colors">04 Governance & DPI Measurement</a></li>
-              <li><a href="#use-cases-fold" className="hover:text-cyan-300 transition-colors">05 Enterprise Use Cases</a></li>
+              {navLinks.map((link) => (
+                <li key={link.to}>
+                  <Link 
+                    to={link.to} 
+                    className="hover:text-cyan-300 transition-colors focus:outline-none focus-visible:underline"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 

@@ -1,60 +1,26 @@
-import React, { useState } from 'react';
-import { Header } from './components/Header';
-import { HeroFold } from './components/HeroFold';
-import { ProblemFold } from './components/ProblemFold';
-import { ArchitectureFold } from './components/ArchitectureFold';
-import { ValueGovernanceFold } from './components/ValueGovernanceFold';
-import { UseCasesCtaFold } from './components/UseCasesCtaFold';
-import { ConsultationModal } from './components/ConsultationModal';
-import { Footer } from './components/Footer';
+import React from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { Layout } from './components/Layout';
+import { OverviewPage } from './pages/OverviewPage';
+import { ProblemPage } from './pages/ProblemPage';
+import { ArchitecturePage } from './pages/ArchitecturePage';
+import { ValueGovernancePage } from './pages/ValueGovernancePage';
+import { UseCasesPage } from './pages/UseCasesPage';
 
 export default function App() {
-  const [consultationOpen, setConsultationOpen] = useState(false);
-  const [consultationTopic, setConsultationTopic] = useState('Discuss a Domain Mesh Use Case');
-
-  const handleOpenConsultation = (topic?: string) => {
-    if (topic) {
-      setConsultationTopic(topic);
-    }
-    setConsultationOpen(true);
-  };
-
-  const handleCloseConsultation = () => {
-    setConsultationOpen(false);
-  };
-
   return (
-    <div className="min-h-screen bg-[#070b14] text-slate-100 font-sans selection:bg-cyan-500/20 selection:text-cyan-200">
-      {/* Sticky Enterprise Navigation */}
-      <Header onOpenConsultation={handleOpenConsultation} />
-
-      {/* Main 5 Folds */}
-      <main>
-        {/* FOLD 1: Hero / Domain Mesh Big Picture */}
-        <HeroFold onOpenConsultation={handleOpenConsultation} />
-
-        {/* FOLD 2: The Problem — Why One General-Purpose Agent Is Not Enough */}
-        <ProblemFold />
-
-        {/* FOLD 3: How CryoGen AI Works — 9-Phase Decentralized Network */}
-        <ArchitectureFold />
-
-        {/* FOLD 4: Value, Governance & Performance — Adaptability & Trust */}
-        <ValueGovernanceFold />
-
-        {/* FOLD 5: Practical Use Cases & Enterprise Conversion CTA */}
-        <UseCasesCtaFold onOpenConsultation={handleOpenConsultation} />
-      </main>
-
-      {/* Corporate Footer */}
-      <Footer />
-
-      {/* Lead Capture & Architecture Advisory Dialog */}
-      <ConsultationModal
-        isOpen={consultationOpen}
-        onClose={handleCloseConsultation}
-        defaultTopic={consultationTopic}
-      />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<OverviewPage />} />
+          <Route path="problem" element={<ProblemPage />} />
+          <Route path="architecture" element={<ArchitecturePage />} />
+          <Route path="value-governance" element={<ValueGovernancePage />} />
+          <Route path="use-cases" element={<UseCasesPage />} />
+          {/* Catch-all route gracefully redirects to Overview homepage */}
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
