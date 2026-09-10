@@ -43,9 +43,9 @@ export const HeroFold: React.FC<HeroFoldProps> = ({ onOpenConsultation }) => {
         <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-950/60 border border-cyan-800/60 text-cyan-300 text-xs font-semibold tracking-wide shadow-sm">
             <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping" />
-            <span className="font-mono uppercase tracking-wider">Enterprise AI</span>
+            <span className="font-mono uppercase tracking-wider">CryoGen AI</span>
             <span className="text-cyan-600">|</span>
-            <span>Domain Mesh Orchestration</span>
+            <span>Domain Mesh & Multi Agent Framework Platform</span>
           </div>
 
           <div className="text-xs font-mono text-slate-400 flex items-center gap-2">
@@ -60,16 +60,9 @@ export const HeroFold: React.FC<HeroFoldProps> = ({ onOpenConsultation }) => {
             Orchestrate Specialized AI Agents Across the Enterprise
           </h1>
           
-          <p className="mt-5 text-lg sm:text-xl text-cyan-200/90 font-medium leading-relaxed max-w-3xl">
-            Enterprise workflows already span multiple systems, functions and areas of expertise. AI should be able to operate the same way.
-          </p>
-
-          <div className="mt-5 grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-slate-300 leading-relaxed">
+          <div className="mt-5 text-sm sm:text-base text-slate-300 leading-relaxed max-w-3xl">
             <p>
-              <strong className="text-white font-semibold">CryoGen AI</strong> is Intelligenz IT’s Domain Mesh Agent Orchestration system, designed as a decentralized network of specialised AI agents that work together to automate complex workflows and efficiently achieve shared business objectives.
-            </p>
-            <p>
-              Rather than depending on one general-purpose agent, CryoGen AI distributes responsibility across task-focused agents that can coordinate, collaborate, interact with enterprise systems and operate within defined governance boundaries.
+              <strong className="text-white font-semibold">CryoGen AI</strong> is Intelligenz IT’s decentralized Domain Mesh Agent Orchestration platform, where specialized AI agents collaborate to automate complex workflows, interact with enterprise systems, and deliver shared business outcomes within defined governance boundaries.
             </p>
           </div>
         </div>

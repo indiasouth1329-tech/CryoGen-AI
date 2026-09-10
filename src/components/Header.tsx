@@ -58,12 +58,9 @@ export const Header: React.FC<HeaderProps> = ({ onOpenConsultation }) => {
               <span className="font-display font-bold text-lg tracking-tight text-white">
                 Intelligenz <span className="text-cyan-400">IT</span>
               </span>
-              <span className="text-[10px] uppercase font-semibold px-2 py-0.5 rounded bg-cyan-950/80 text-cyan-300 border border-cyan-700/50 hidden sm:inline-block">
-                Enterprise AI
-              </span>
             </div>
             <p className="text-[11px] text-slate-400 font-mono tracking-wide">
-              CryoGen AI <span className="text-slate-600">|</span> Domain Mesh
+              CryoGen AI
             </p>
           </div>
         </Link>
